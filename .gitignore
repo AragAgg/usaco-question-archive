@@ -1,3 +1,4 @@
 commit_script.py
 .DS_Store
 *.canvas
+extract_solutions.py
