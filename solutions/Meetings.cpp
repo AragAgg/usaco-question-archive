@@ -1,0 +1,1 @@
+[BARN] 1 2 3 4 ... 4.9*10^9 _ [COW] _ [COW] _ [COW] _ [COW] ... <FOLLOWS> _ REMAINING NUMBERS.
