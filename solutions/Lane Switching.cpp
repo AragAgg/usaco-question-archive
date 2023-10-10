@@ -1,0 +1,1 @@
+1. Its a graph problem, we could see each lane and each segment between two cars as a node and weather or not we could travel between those as an edge (with edge cost as the space btw. the two cars), this way the problem basically becomes the min cost to travel from a -> b. (solve maybe using dijkstra's)
