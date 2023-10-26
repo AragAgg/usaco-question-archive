@@ -1,0 +1,129 @@
+---
+Question Link: https://codeforces.com/contest/1368/problem/D
+Problem Set:
+  - "*1700"
+  - Code Forces
+Last edited time: 2023-10-26T13:20
+Status: Solved
+tags:
+  - Bitmask
+  - Greedy
+  - Math
+Key Takeaway: When solving the entire problem based on bitmask/bitwise is too tough in one go, try to solve it “bit-by-bit”. When thing get complicated, try forming a truth table.
+---
+### Solution (AC) [actually better that the USACO Editorial]
+
+```C++
+\#include <bits/stdc++.h>
+
+using namespace std;
+
+// Shortcuts for common operations
+\#define pb push_back
+\#define ppb pop_back
+\#define f first
+\#define s second
+\#define all(x) (x).begin(), (x).end()
+\#define ll long long
+\#define endl "\n"
+
+// Type definitions for convenience
+typedef vector<int> vi;
+typedef vector<bool> vb;
+typedef pair<int, int> pii;
+typedef vector<vi> vvi;
+typedef vector<pii> vii;
+typedef unordered_set<int> usi;
+typedef unordered_map<int, int> umii;
+
+// Debugging macros
+\#define debug(x) cerr << \#x << " = " << (x) << '\n'
+\#define debug_vector(v) _debug_vector(\#v, v)
+template<typename T>
+void _debug_vector(const string& name, const vector<T>& a) {
+    cerr << name << " = [ ";
+    for(const auto &x : a) cerr << x << ' ';
+    cerr << "]\n";
+}
+
+// I/O redirection for local testing
+\#define iofile(io) \
+        freopen((io + ".in").c_str(), "r", stdin); \
+        freopen((io + ".out").c_str(), "w", stdout);
+
+// delta for floodfill
+vi dx = {0, 1, 0, -1};
+vi dy = {1, 0, -1, 0};
+
+// extended deltas for floodfill
+vi edx = {0, 1, 0, -1, 1, 1, -1, -1};
+vi edy = {1, 0, -1, 0, 1, -1, 1, -1};
+
+// Common outputs
+void yes() { cout << "YES" << '\n'; }
+void no() { cout << "NO" << '\n'; }
+
+// cin.tie(0)->sync_with_stdio(0);
+
+void fx() {
+    int n;
+    cin >> n;
+    
+    vi bits(20, 0);
+    
+    for(int i = 0; i < n; i++){
+        int t;
+        cin >> t;
+        
+        for(int b = 0; b < 20; b++) if(t & ( 1 << b )) bits[b]++;
+    }
+    
+    ll ans = 0;
+    while(true){
+        
+        ll curr = 0;
+        int m = INT_MAX;
+        
+        for(int i = 0; i < 20; i++){
+            if(!bits[i]) continue;
+            m = min(m, bits[i]);
+            curr |= (1 << i);
+        }
+        
+        if(!curr) break;
+        
+        // cout << "Curr: " <<curr<< " & m: " << m << endl;
+        
+        ans += curr*curr*m;
+        
+        for(int i = 0; i < 20; i++) bits[i] = max(bits[i] - m, 0);
+        
+    }
+    
+    cout << ans << endl;
+}
+
+int main() {
+    // Uncomment the following lines for file I/O
+    // iofile(string("hello"));
+    
+    // Uncomment the following lines for multiple test cases
+    // int t; cin >> t;
+    // while(t--) fx();
+    
+    // Single test case
+    fx();
+    
+    return 0;
+}
+```
+
+### Editorial
+
+> [!info] Codeforces Global Round 8: editorial - Codeforces  
+> Codeforces.  
+> [https://codeforces.com/blog/entry/79027](https://codeforces.com/blog/entry/79027)  
+
+> [!info] Solution - AND, OR and square sum (CF)  
+> A free collection of curated, high-quality competitive programming resources to take you from USACO Bronze to USACO Platinum and beyond.  
+> [https://usaco.guide/problems/cf-and-or-and-square-sum/solution](https://usaco.guide/problems/cf-and-or-and-square-sum/solution)
