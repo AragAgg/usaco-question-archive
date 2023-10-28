@@ -1,0 +1,125 @@
+---
+Question Link: https://www.codechef.com/problems/KSIZEGCD
+Problem Set:
+  - Code Chef
+  - Priority
+Last edited time: 2023-10-28T22:22
+Status: Seen Editorial
+tags:
+  - Dynamic-Programming
+  - Math
+  - Number-Theory
+  - Trick
+What's up: Implemented after seeing the solution, it’s advanced enough that I’m pretty certain I didn’t fully understand it. Will retry.
+Key Takeaway: GCD(x, smt…) could take up a maximum of log(x) distinct values.See attached page for more info about the trick.
+---
+### Solution (AC)
+
+```C++
+\#include <bits/stdc++.h>
+
+using namespace std;
+
+// Shortcuts for common operations
+\#define pb push_back
+\#define ppb pop_back
+\#define f first
+\#define s second
+\#define all(x) (x).begin(), (x).end()
+\#define ll long long
+\#define endl "\n"
+
+// Type definitions for convenience
+typedef vector<int> vi;
+typedef vector<bool> vb;
+typedef pair<int, int> pii;
+typedef vector<vi> vvi;
+typedef vector<pii> vii;
+typedef unordered_set<int> usi;
+typedef unordered_map<int, int> umii;
+
+// Debugging macros
+\#define debug(x) cerr << \#x << " = " << (x) << '\n'
+\#define debug_vector(v) _debug_vector(\#v, v)
+template<typename T>
+void _debug_vector(const string& name, const vector<T>& a) {
+    cerr << name << " = [ ";
+    for(const auto &x : a) cerr << x << ' ';
+    cerr << "]\n";
+}
+
+// I/O redirection for local testing
+\#define iofile(io) \
+        freopen((io + ".in").c_str(), "r", stdin); \
+        freopen((io + ".out").c_str(), "w", stdout);
+
+// delta for floodfill
+vi dx = {0, 1, 0, -1};
+vi dy = {1, 0, -1, 0};
+
+// extended deltas for floodfill
+vi edx = {0, 1, 0, -1, 1, 1, -1, -1};
+vi edy = {1, 0, -1, 0, 1, -1, 1, -1};
+
+// Common outputs
+void yes() { cout << "YES" << '\n'; }
+void no() { cout << "NO" << '\n'; }
+
+// cin.tie(0)->sync_with_stdio(0);
+
+void fx() {
+    int n;
+    cin >> n;
+    
+    vi tab(n);
+    for(auto &i: tab) cin >> i;
+    
+    vector<map<int, int>>gcds(n);
+    
+    for(int i = 0; i < n; i++){
+        gcds[i][tab[i]] = 1;
+        
+        if(i){
+            for(auto [f, s]: gcds[i-1]){
+                int newGcd = gcd(f, tab[i]);
+                gcds[i][newGcd] = max(gcds[i][newGcd], s+1);
+            }
+        }
+    }
+    
+    vi res(n, 0);
+    
+    for(int i = 0; i < n; i++){
+        for(auto [f, s]: gcds[i]){
+            res[s-1] = max(res[s-1], f);
+        }
+    }
+    
+    for(auto i: res) cout << i << " ";
+    cout << endl;
+}
+
+int main() {
+    // Uncomment the following lines for file I/O
+    // iofile(string("hello"));
+    
+    // Uncomment the following lines for multiple test cases
+    int t; cin >> t;
+    while(t--) fx();
+    
+    // Single test case
+    // fx();
+    
+    return 0;
+}
+```
+
+### CC Explained Solution
+
+> [!info] CodeChef: Practical coding for everyone  
+> Learn to code for free using our beginner friendly and interactive learning courses.  
+> [https://www.codechef.com/viewsolution/85775865](https://www.codechef.com/viewsolution/85775865)  
+
+  
+
+[[GCD on Subsegments]]
