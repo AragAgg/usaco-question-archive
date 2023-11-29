@@ -1,0 +1,10 @@
+---
+Question Link: https://atcoder.jp/contests/dp/tasks/dp_w
+Problem Set:
+  - AtCoder
+Last edited time: 2023-11-29T23:30
+Status: Skipped for now
+tags:
+  - Dynamic-Programming
+What's up: Can’t understand the editorial.
+---
