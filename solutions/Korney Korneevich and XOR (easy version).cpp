@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const int MAXA = 1 << 9;
+
+int main() {
+	int n;
+	cin >> n;
+	vector<int> arr(n);
+	for (int &i : arr) { cin >> i; }
+
+	/*
+	 * dp[x][i] = whether it is possible to get x using XOR of an increasing
+	 * sequence which ends with a number smaller than or equal to i
+	 */
+	vector<vector<bool>> dp(MAXA, vector<bool>(MAXA, false));
+	for (int i = 0; i < MAXA; i++) { dp[0][i] = true; }
+
+	for (int &a : arr) {
+		// 0 ^ x = x for all x, so there is no need to consider the element 0
+		if (a == 0) { continue; }
+		for (int i = 0; i < MAXA; i++) {
+			/*
+			 * For every i as a result of XOR operations on increasing sequences
+			 * that end with a number less than a, we can add a to the end of it
+			 * and get a new x = i ^ a
+			 */
+			dp[a ^ i][a] = dp[a ^ i][a] || dp[i][a - 1];
+			/*
+			 * x = a ^ i can be used to construct new increasing sequences by
+			 * appending a number j >= a
+			 */
+			if (dp[a ^ i][a]) {
+				int j = a + 1;
+				while (j < MAXA && !dp[a ^ i][j]) { dp[a ^ i][j++] = true; }
+			}
+		}
+	}
+
+	vector<int> ans;
+	for (int i = 0; i < MAXA; i++) {
+		if (dp[i][MAXA - 1]) { ans.push_back(i); }
+	}
+
+	cout << ans.size() << "\n";
+	for (int &i : ans) { cout << i << " "; }
+	cout << endl;
+}
